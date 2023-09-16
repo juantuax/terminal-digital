@@ -12,16 +12,29 @@ import { ReadAutomatic, MapAutomatic } from './views/Automatic';
 import { ReadTerms } from './views/Terms';
 import { CreateHelpers, ReadHelpers, UpdateHelpers } from './views/Helper';
 import { ReadSessions } from './views/Session';
+import { CreateBankAccounts, ReadBankAccounts, UpdateBankAccounts } from './views/BankAccount';
+import { ApprovePayments, CreatePayments, ReadPayments, RejectPayments, UpdatePayments } from './views/Payment';
+import Profile from '../../components/screens/dashboard/profiles/Profile';
+
 
 const DashboardRouter = ({ match: { url } }) => (
     <Switch>
         <Route path={`${url}`} exact component={ReadMain} />
         <Route path={`${url}/drivers`} exact component={ReadDrivers} />
+        <Route path={`${url}/profile`} exact component={Profile} />
         <Route path={`${url}/drivers/new`} exact component={CreateDrivers} />
         <Route path={`${url}/drivers/:id`} exact component={UpdateDrivers} />
         <Route path={`${url}/helpers`} exact component={ReadHelpers} />
         <Route path={`${url}/helpers/new`} exact component={CreateHelpers} />
         <Route path={`${url}/helpers/:id`} exact component={UpdateHelpers} />
+        <Route path={`${url}/bank-accounts`} exact component={ReadBankAccounts} />
+        <Route path={`${url}/bank-accounts/new`} exact component={CreateBankAccounts} />
+        <Route path={`${url}/bank-accounts/:id`} exact component={UpdateBankAccounts} />
+        <Route path={`${url}/payments/new`} exact component={CreatePayments} />
+        <Route path={`${url}/payments/:id`} exact component={UpdatePayments} />
+        <Route path={`${url}/payments/approve/:id`} exact component={ApprovePayments} />
+        <Route path={`${url}/payments/reject/:id`} exact component={RejectPayments} />
+        <Route path={`${url}/payments`} exact component={ReadPayments} />
         <Route path={`${url}/roots`} exact component={ReadRoots} />
         <Route path={`${url}/sessions`} exact component={ReadSessions} />
         <Route path={`${url}/roots/new`} exact component={CreateRoots} />

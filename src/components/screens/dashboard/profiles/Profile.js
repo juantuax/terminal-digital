@@ -41,24 +41,27 @@ const Profile = () => {
                     setUserId(response.data.id);
                     const gotImage = await GetOneImage(response.data.User.id);
                     if (gotImage.statusCode == 200) {
+
                         setImage(APP_SETTINGS.IMG_URL + gotImage.data.path);
                         setRemove(gotImage.data.path);
                     }
                 }
             } else if (rol == 3) {
-                const response = await GetCompanyProfile(id);
+                const response = await GetAdminProfile(id);
                 if (response.statusCode == 200) {
-                    setDni(response.data.idNumber);
                     setName(response.data.fullname);
-                    setHomePhone(response.data.homePhone);
                     setPhone(response.data.phone);
                     setAddress(response.data.address);
                     setUserId(response.data.id);
                     setUsername(response.data.User.username);
                     const gotImage = await GetOneImage(response.data.User.id);
                     if (gotImage.statusCode == 200) {
-                        setImage(APP_SETTINGS.IMG_URL + gotImage.data.path);
+                        if(gotImage.data.path){
+                            setImage(APP_SETTINGS.IMG_URL + gotImage.data.path);
                         setRemove(gotImage.data.path);
+                        }
+                        
+                        
                     }
                 }
             }
@@ -92,7 +95,7 @@ const Profile = () => {
     const update = async (e) => {
         e.preventDefault();
 
-        if (name == "" || dni == "" || phone == "" || username == "") {
+        if (name == "" ||  phone == "" || username == "") {
             setEmpty(true);
         } else {
             let path = '';
@@ -145,9 +148,7 @@ const Profile = () => {
             } else if (rol == 3) {
                 object = {
                     fullname: name,
-                    dni: dni,
                     phone: phone,
-                    homePhone: phoneHome,
                     address: address,
                     password: password,
                     username: username,
@@ -157,7 +158,7 @@ const Profile = () => {
                     userId: id,
                     picture: path
                 };
-                const response = await UpdateCompany(object);
+                const response = await UpdateAdmin(object);
                 if (response.statusCode == 200) {
                     setOk(true);
                 } else if (response.statusCode == 409) {
@@ -275,19 +276,7 @@ const Profile = () => {
                                                 />
                                             </div>
 
-                                            <div className="sm:col-span-6">
-                                                <label htmlFor="email_address" className="block text-sm font-medium text-blue-gray-900">
-                                                    Número de identificación
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    name="dni"
-                                                    id="dni"
-                                                    value={dni}
-                                                    onChange={(e) => { setDni(e.target.value.toUpperCase()) }}
-                                                    className="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
+                                
 
                                             <div className="sm:col-span-3">
                                                 <label htmlFor="phone_number" className="block text-sm font-medium text-blue-gray-900">
@@ -304,20 +293,7 @@ const Profile = () => {
                                                 />
                                             </div>
 
-                                            <div className="sm:col-span-3">
-                                                <label htmlFor="country" className="block text-sm font-medium text-blue-gray-900">
-                                                    Teléfono fijo
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    name="homePhone"
-                                                    id="homePhone"
-                                                    value={phoneHome}
-                                                    onKeyPress={(e) => { HomePhone(e) }}
-                                                    onChange={(e) => { setHomePhone(e.target.value) }}
-                                                    className="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
+                                         
 
                                             <div className="sm:col-span-6">
                                                 <label htmlFor="description" className="block text-sm font-medium text-blue-gray-900">
@@ -637,19 +613,7 @@ const Profile = () => {
                                                 />
                                             </div>
 
-                                            <div className="sm:col-span-6">
-                                                <label htmlFor="email_address" className="block text-sm font-medium text-blue-gray-900">
-                                                    Número de identificación
-                                                </label>
-                                                <input
-                                                    type="text"
-                                                    name="dni"
-                                                    id="dni"
-                                                    value={dni}
-                                                    onChange={(e) => { setDni(e.target.value.toUpperCase()) }}
-                                                    className="mt-1 block w-full border-blue-gray-300 rounded-md shadow-sm text-blue-gray-900 sm:text-sm focus:ring-blue-500 focus:border-blue-500"
-                                                />
-                                            </div>
+                                        
 
                                             <div className="sm:col-span-3">
                                                 <label htmlFor="phone_number" className="block text-sm font-medium text-blue-gray-900">

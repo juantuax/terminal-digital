@@ -19,12 +19,13 @@ import Logo from "../../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "./../../actions/authActions";
 import { ReferralSearch as SearchData } from "./../../actions/globalActions";
-
+import { Switch } from "@headlessui/react";
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
 };
 
 const DashboardLayout = () => {
+  const [enabled, setEnabled] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const rol = useSelector((state) => state.auth.user.role);
   const token = useSelector((state) => state.auth.token);
@@ -78,6 +79,18 @@ const DashboardLayout = () => {
             },
             // { name: 'Clientes', href: '/dashboard/clients', icon: UserGroupIcon, current: false },
             {
+              name: "Cuentas bancarias",
+              href: "/dashboard/bank-accounts",
+              icon: UserGroupIcon,
+              current: false,
+            },
+            {
+              name: "Pagos",
+              href: "/dashboard/payments",
+              icon: UserGroupIcon,
+              current: false,
+            },
+            {
               name: "Sesiones",
               href: "/dashboard/sessions",
               icon: UserGroupIcon,
@@ -116,9 +129,16 @@ const DashboardLayout = () => {
               icon: TruckIcon,
               current: false,
             },
+            {
+              name: "Pagos",
+              href: "/dashboard/payments",
+              icon: UserGroupIcon,
+              current: false,
+            },
             // { name: 'Versiones de términos', href: '/dashboard/version', icon: UserGroupIcon, current: false }
           ],
         },
+        { name: "Perfil", href: "/dashboard/profile", icon: UsersIcon, current: false },
         // { name: 'Remisiones', href: '/dashboard/referrals', icon: FolderIcon, current: false },
         // { name: 'Términos y condiciones', href: '/dashboard/terms', icon: DocumentTextIcon, current: false },
         // { name: 'Reportes', href: '#', icon: ChartBarIcon, current: false },
@@ -404,7 +424,30 @@ const DashboardLayout = () => {
         </div>
       </div>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow justify-end"> 
+        { rol == 3 && (
+        <Switch.Group
+                          as="div"
+                          className="mt-1 sm:mt-0 sm:col-span-1 p-4 ml"
+                        >
+                          <Switch
+                            checked={enabled}
+                            onChange={setEnabled}
+                            className={classNames(
+                              enabled ? "bg-indigo-600" : "bg-gray-200",
+                              "relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            )}
+                          >
+                            <span className="sr-only">Use setting</span>
+                            <span
+                              aria-hidden="true"
+                              className={classNames(
+                                enabled ? "translate-x-5" : "translate-x-0",
+                                "pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+                              )}
+                            />
+                          </Switch>
+                        </Switch.Group>)}
           <button
             className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
             onClick={() => setSidebarOpen(true)}
