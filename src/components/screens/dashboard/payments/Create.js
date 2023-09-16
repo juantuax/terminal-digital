@@ -69,7 +69,8 @@ const Create = () => {
           let obj = { path: imager.slice(1, imager.lenght) };
           const remove = await RemoveImage(obj);
         }
-      } else {
+      } else { 
+        if(!enabled)
         if (image !== APP_SETTINGS.IMG_URL + imager) {
           if (images.current.files[0] != null) {
             const filePath = await uploadFile(images.current.files[0]);
